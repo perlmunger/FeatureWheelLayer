@@ -18,6 +18,8 @@
 		B36C2B8C16E71F230020C0C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B36C2B8B16E71F230020C0C7 /* Default-568h@2x.png */; };
 		B36C2B8F16E71F230020C0C7 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B36C2B8D16E71F230020C0C7 /* MainStoryboard.storyboard */; };
 		B36C2B9216E71F230020C0C7 /* MLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36C2B9116E71F230020C0C7 /* MLViewController.m */; };
+		B36C2B9A16E71F4F0020C0C7 /* MLFeatureWheelLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B36C2B9916E71F4F0020C0C7 /* MLFeatureWheelLayer.m */; };
+		B36C2B9C16E720440020C0C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B36C2B9B16E720440020C0C7 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,9 @@
 		B36C2B8E16E71F230020C0C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		B36C2B9016E71F230020C0C7 /* MLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLViewController.h; sourceTree = "<group>"; };
 		B36C2B9116E71F230020C0C7 /* MLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLViewController.m; sourceTree = "<group>"; };
+		B36C2B9816E71F4F0020C0C7 /* MLFeatureWheelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLFeatureWheelLayer.h; sourceTree = "<group>"; };
+		B36C2B9916E71F4F0020C0C7 /* MLFeatureWheelLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLFeatureWheelLayer.m; sourceTree = "<group>"; };
+		B36C2B9B16E720440020C0C7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B36C2B9C16E720440020C0C7 /* QuartzCore.framework in Frameworks */,
 				B36C2B7616E71F230020C0C7 /* UIKit.framework in Frameworks */,
 				B36C2B7816E71F230020C0C7 /* Foundation.framework in Frameworks */,
 				B36C2B7A16E71F230020C0C7 /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +79,7 @@
 		B36C2B7416E71F230020C0C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B36C2B9B16E720440020C0C7 /* QuartzCore.framework */,
 				B36C2B7516E71F230020C0C7 /* UIKit.framework */,
 				B36C2B7716E71F230020C0C7 /* Foundation.framework */,
 				B36C2B7916E71F230020C0C7 /* CoreGraphics.framework */,
@@ -89,6 +96,8 @@
 				B36C2B9016E71F230020C0C7 /* MLViewController.h */,
 				B36C2B9116E71F230020C0C7 /* MLViewController.m */,
 				B36C2B7C16E71F230020C0C7 /* Supporting Files */,
+				B36C2B9816E71F4F0020C0C7 /* MLFeatureWheelLayer.h */,
+				B36C2B9916E71F4F0020C0C7 /* MLFeatureWheelLayer.m */,
 			);
 			path = SpinnyFeatureWheel;
 			sourceTree = "<group>";
@@ -177,6 +186,7 @@
 				B36C2B8216E71F230020C0C7 /* main.m in Sources */,
 				B36C2B8616E71F230020C0C7 /* MLAppDelegate.m in Sources */,
 				B36C2B9216E71F230020C0C7 /* MLViewController.m in Sources */,
+				B36C2B9A16E71F4F0020C0C7 /* MLFeatureWheelLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "MLViewController.h"
+#import "MLFeatureWheelLayer.h"
 
 @interface MLViewController ()
 
@@ -16,8 +17,12 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+  [super viewDidLoad];
+
+  MLFeatureWheelLayer *featureWheelLayer = [[MLFeatureWheelLayer alloc] initWithFrame:[[self view] bounds]];
+  [featureWheelLayer setPosition:[[self view] center]];
+  
+  [[[self view] layer] addSublayer:featureWheelLayer];
 }
 
 - (void)didReceiveMemoryWarning
