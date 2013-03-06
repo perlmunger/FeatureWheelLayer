@@ -14,7 +14,15 @@
 
 @property (nonatomic, assign) NSInteger segmentCount;
 @property (nonatomic, strong) CALayer *outerLayer;
+@property (nonatomic, assign) BOOL shouldDisplayStars;
+@property (nonatomic, assign) NSInteger starCount;
+
+@property (nonatomic, strong) UIColor *burstColor;
+@property (nonatomic, strong) UIColor *altBurstColor;
+@property (nonatomic, strong) UIColor *starColor;
 
 - (void)buildSublayers;
+
+- (UIBezierPath*)randomStarPath;
 
 @end

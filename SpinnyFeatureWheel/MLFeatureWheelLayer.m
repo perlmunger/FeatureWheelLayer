@@ -8,9 +8,14 @@
 
 #import "MLFeatureWheelLayer.h"
 
-#define kDefaultLayerSize CGSizeMake(500.0f, 300.0f)
+#define kDefaultLayerSize        CGSizeMake(500.0f, 300.0f)
+#define kMaxStarSize             CGSizeMake(200.0f, 200.0f)
 #define kDefaultNumberOfSegments 28
-#define kBackgroundUpsizeFactor 2.5f
+#define kBackgroundUpsizeFactor  2.5f
+#define kDefaultStarCount        7
+#define kDefaultBurstColor       [UIColor orangeColor]
+#define kDefaultAltBurstColor    [UIColor yellowColor]
+#define kDefaultStarColor        [UIColor redColor]
 
 @implementation MLFeatureWheelLayer
 
@@ -31,6 +36,11 @@
     [self setBounds:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
     [self setBorderWidth:1.0f];
     [self setSegmentCount:kDefaultNumberOfSegments];
+    [self setStarCount:kDefaultStarCount];
+    [self setBurstColor:kDefaultBurstColor];
+    [self setAltBurstColor:kDefaultAltBurstColor];
+    [self setStarColor:kDefaultStarColor];
+    [self setShouldDisplayStars:YES];
     [self setMasksToBounds:YES];
     [self buildSublayers];
   }
@@ -46,7 +56,6 @@
   _outerLayer = [CALayer layer];
   [_outerLayer setBounds:bounds];
   [_outerLayer setPosition:CGPointMake([self bounds].size.width/2.0f, [self bounds].size.height/2.0f)];
-//  [_outerLayer setBackgroundColor:[[UIColor grayColor] CGColor]];
   
   CGFloat width = radius * 2 * M_PI / (CGFloat)[self segmentCount];
   for (NSInteger i = 0; i < [self segmentCount]; ++i) {
@@ -55,9 +64,9 @@
     [shapeLayer setPosition:CGPointMake([_outerLayer bounds].size.width/2.0f, [_outerLayer bounds].size.height / 2.0f)];
     [shapeLayer setAnchorPoint:CGPointMake(0.5f, 1.0f)];
     if (i % 2 == 0) {
-      [shapeLayer setFillColor:[[UIColor orangeColor] CGColor]];
+      [shapeLayer setFillColor:[[self burstColor] CGColor]];
     } else {
-      [shapeLayer setFillColor:[[UIColor yellowColor] CGColor]];
+      [shapeLayer setFillColor:[[self altBurstColor] CGColor]];
     }
     
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -71,6 +80,23 @@
   }
   
   [self addSublayer:_outerLayer];
+  
+  if ([self shouldDisplayStars]) {
+    for (NSInteger i = 0; i < [self starCount]; ++i) {
+      UIBezierPath *path = [self randomStarPath];
+      CAShapeLayer *starLayer = [CAShapeLayer layer];
+      [starLayer setBounds:[path bounds]];
+      [starLayer setPath:[path CGPath]];
+      CGFloat x = (CGFloat)(arc4random() % (NSInteger)[self bounds].size.width);
+      CGFloat y = (CGFloat)(arc4random() % (NSInteger)[self bounds].size.width);
+      [starLayer setPosition:CGPointMake(x, y)];
+      [starLayer setFillColor:[[self starColor] CGColor]];
+      NSInteger randomAngleInDegrees = arc4random() % 360;
+      [starLayer setTransform:CATransform3DMakeRotation((CGFloat)randomAngleInDegrees * 180.0f / M_PI, 0.0f, 0.0f, 1.0f)];
+      [self addSublayer:starLayer];
+    }
+  }
+  
   [self startAnimating];
 }
 
@@ -83,7 +109,33 @@
   [animation setRepeatCount:HUGE_VALF];
   
   [_outerLayer addAnimation:animation forKey:@"transform.rotation"];
+}
 
+- (UIBezierPath*)randomStarPath
+{
+  CGFloat size = (CGFloat)(arc4random() % (NSInteger)kMaxStarSize.width);
+
+  UIBezierPath *starPath = [UIBezierPath bezierPath];
+  
+  CGFloat xCenter = size / 2.0f;
+  CGFloat yCenter = size / 2.0f;
+  
+  double radius = size / 2.0;
+  CGFloat flip = -1.0;
+
+  double angle = 2.0 * M_PI * (2.0 / 5.0);
+
+  [starPath moveToPoint:CGPointMake(xCenter, radius * flip + yCenter)];
+  
+  for (NSUInteger index = 1; index < 5; ++index) {
+    CGFloat x = radius * sin(index * angle);
+    CGFloat y = radius * cos(index * angle);
+    [starPath addLineToPoint:CGPointMake(x+xCenter, y * flip + yCenter)];
+  }
+  
+  [starPath closePath];
+  
+  return starPath;
 }
 
 @end
