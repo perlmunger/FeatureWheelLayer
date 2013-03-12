@@ -19,16 +19,18 @@
 {
   [super viewDidLoad];
 
-  MLFeatureWheelLayer *featureWheelLayer = [[MLFeatureWheelLayer alloc] initWithFrame:[[self view] bounds]];
-  [featureWheelLayer setPosition:[[self view] center]];
+  MLFeatureWheelLayer *featureWheelLayer = [MLFeatureWheelLayer layer];
+  [featureWheelLayer setPosition:CGPointMake([[self view] center].x, 240.0f)];
   
   [[[self view] layer] addSublayer:featureWheelLayer];
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  MLFeatureWheelLayer *featureWheelLayer2 = [MLFeatureWheelLayer layer];
+  [featureWheelLayer2 setPosition:CGPointMake([[self view] center].x, 560.0f)];
+  [featureWheelLayer2 setBurstColor:[UIColor orangeColor]];
+  [featureWheelLayer2 setAltBurstColor:[UIColor yellowColor]];
+  [featureWheelLayer2 setStarColor:[UIColor redColor]];
+  
+  [[[self view] layer] addSublayer:featureWheelLayer2];
 }
 
 @end

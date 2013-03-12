@@ -13,9 +13,9 @@
 #define kDefaultNumberOfSegments 28
 #define kBackgroundUpsizeFactor  2.5f
 #define kDefaultStarCount        7
-#define kDefaultBurstColor       [UIColor orangeColor]
-#define kDefaultAltBurstColor    [UIColor yellowColor]
-#define kDefaultStarColor        [UIColor redColor]
+#define kDefaultBurstColor       [UIColor colorWithRed:172.0f/255.0f green:193.0f/255.0f blue:210.0f/255.0f alpha:1.0f]
+#define kDefaultAltBurstColor    [UIColor colorWithRed:18.0f/255.0f green:56.0f/255.0f blue:169.0f/255.0f alpha:1.0f]
+#define kDefaultStarColor        [UIColor colorWithRed:25.0f/255.0f green:77.0f/255.0f blue:232.0f/255.0f alpha:1.0f]
 
 @implementation MLFeatureWheelLayer
 
@@ -33,6 +33,8 @@
 {
   self = [super init];
   if (self) {
+    _starLayers = [[NSMutableArray alloc] init];
+    _stripeLayers = [[NSMutableArray alloc] init];
     [self setBounds:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
     [self setBorderWidth:1.0f];
     [self setSegmentCount:kDefaultNumberOfSegments];
@@ -77,6 +79,8 @@
     [shapeLayer setPath:[path CGPath]];
     [shapeLayer setTransform:CATransform3DMakeRotation(i*distance, 0.0f, 0.0f, 1.0f)];
     [_outerLayer addSublayer:shapeLayer];
+    
+    [_stripeLayers addObject:shapeLayer];
   }
   
   [self addSublayer:_outerLayer];
@@ -93,11 +97,29 @@
       [starLayer setFillColor:[[self starColor] CGColor]];
       NSInteger randomAngleInDegrees = arc4random() % 360;
       [starLayer setTransform:CATransform3DMakeRotation((CGFloat)randomAngleInDegrees * 180.0f / M_PI, 0.0f, 0.0f, 1.0f)];
+      [_starLayers addObject:starLayer];
       [self addSublayer:starLayer];
     }
   }
   
   [self startAnimating];
+}
+
+- (void)layoutSublayers
+{
+  NSInteger i = 0;
+  for (CAShapeLayer *layer in _stripeLayers) {
+    if (i++ % 2 == 0) {
+      [layer setFillColor:[[self burstColor] CGColor]];
+    } else {
+      [layer setFillColor:[[self altBurstColor] CGColor]];
+    }
+  }
+
+  for (CAShapeLayer *starLayer in _starLayers) {
+    [starLayer setFillColor:[[self starColor] CGColor]];
+  }
+
 }
 
 - (void)startAnimating
@@ -109,6 +131,17 @@
   [animation setRepeatCount:HUGE_VALF];
   
   [_outerLayer addAnimation:animation forKey:@"transform.rotation"];
+  
+  // Add a rotation animation to each layer
+  for (CAShapeLayer *starLayer in _starLayers) {
+    CABasicAnimation *starAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    [starAnimation setFromValue:[NSNumber numberWithFloat:0.0f]];
+    [starAnimation setToValue:[NSNumber numberWithFloat:2.0f * M_PI]];
+    [starAnimation setDuration:5.0f];
+    [starAnimation setRepeatCount:HUGE_VALF];
+    
+    [starLayer addAnimation:starAnimation forKey:@"transform.rotation"];
+  }
 }
 
 - (UIBezierPath*)randomStarPath

@@ -21,6 +21,9 @@
 @property (nonatomic, strong) UIColor *altBurstColor;
 @property (nonatomic, strong) UIColor *starColor;
 
+@property (nonatomic, strong) NSMutableArray *starLayers;
+@property (nonatomic, strong) NSMutableArray *stripeLayers;
+
 - (void)buildSublayers;
 
 - (UIBezierPath*)randomStarPath;
