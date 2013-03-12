@@ -3,7 +3,7 @@ Feature Wheel Core Animation Layer
 
 I've built this layer many times and I've seen it many times. It seemed like a good candidate for a standalone layer for use in your applications. There may be other names for this kind of effect, but I've dubbed it "feature wheel". It is normally used as a way to feature something within an app, hence the name.
 
-![Feature wheel layer](feathurewheel.png)
+![Feature wheel layer](featurewheel.png)
 
 Here is how you use the code. To add it to a view controller,
 
