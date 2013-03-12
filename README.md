@@ -29,7 +29,7 @@ Here is how you use the code. To add it to a view controller,
 }
 ```
 
-This creates two feature wheel in the same view. This is what the demo code does.
+This creates two feature wheels in the same view. This is what the demo code does.
 
 The animation will begin immediately.
 
